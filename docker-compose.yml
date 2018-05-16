@@ -1,0 +1,28 @@
+version: '2'
+services:
+  generic-wordpress:
+    depends_on:
+      - db-generic-wordpress
+    image: wordpress:latest
+    restart: always
+    volumes:
+      - ./:/var/www/html/
+    environment:
+      WORDPRESS_DB_HOST: db-generic-wordpress:3306
+      WORDPRESS_DB_USER: generic
+      WORDPRESS_DB_PASSWORD: p4ssw0rd!
+      WORDPRESS_DB_NAME: generic
+    ports:
+      - 80:80
+      - 443:443
+
+  db-generic-wordpress:
+    image: mariadb:latest
+    restart: always
+    volumes:
+       - ./data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: generic
+      MYSQL_USER: generic
+      MYSQL_PASSWORD: p4ssw0rd!
+      MYSQL_ROOT_PASSWORD: p4ssw0rd!
